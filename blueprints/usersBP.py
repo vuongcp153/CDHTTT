@@ -16,3 +16,11 @@ def create_user():
 def get_users():
     users = UserService.get_all_users()
     return jsonify(users)
+@users_bp.route("/match", methods=["POST"])
+def match_user():
+    try:
+        data = request.json
+        result = UserService.match_user_by_preferences(data)
+        return jsonify(result)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
